@@ -10,29 +10,45 @@ namespace RestaurantApp
     {
         static void Main(string[] args)
         {
-            
-
             List<Restaurant> restaurants = new List<Restaurant>
             {
-             new Restaurant(1, "Quanjude Roast Duck", "Beijing Cuisine", 4.5),
-              new Restaurant(2, "Donglaishun Hot Pot", "Hot Pot", 4.6),
-              new Restaurant(3, "Din Tai Fung", "Taiwanese Cuisine", 4.7),
-              new Restaurant(4, "Huguosi Snacks", "Snack", 4.2),
-              new Restaurant(5, "Haidilao Hot Pot", "Hot Pot", 4.8),
+                new Restaurant(1, "Quanjude Roast Duck", "Beijing Cuisine", 4.5),
+                new Restaurant(2, "Donglaishun Hot Pot", "Hot Pot", 4.6),
+                new Restaurant(3, "Din Tai Fung", "Taiwanese Cuisine", 4.7),
+                new Restaurant(4, "Huguosi Snacks", "Snack", 4.2),
+                new Restaurant(5, "Haidilao Hot Pot", "Hot Pot", 4.8),
             };
 
-            
-
+            // แสดงรายการทั้งหมด
             foreach (var item in restaurants)
             {
                 Console.WriteLine($"id : {item.getId()} name: {item.getName()} type: {item.getType()} rating: {item.getRating()}");
             }
-            
+
             double avg = restaurants.Average(r => r.getRating());
             Console.WriteLine($"จำนวนร้านทั้งหมด :{restaurants.Count}");
-            Console.WriteLine($"คะแนนเฉลี่ยร้านทั้งหมด :{avg}");
+            Console.WriteLine($"คะแนนเฉลี่ยร้านทั้งหมด :{avg}\n");
 
+            // --- ส่วนที่เพิ่มใหม่: ค้นหาร้านจากชื่อ ---
+            Console.Write("กรุณาใส่ชื่อร้านที่ต้องการค้นหา (พิมพ์บางส่วนได้): ");
+            string keyword = Console.ReadLine();
 
+            var searchResults = restaurants
+                .Where(r => r.getName().ToLower().Contains(keyword.ToLower()))
+                .ToList();
+
+            if (searchResults.Count > 0)
+            {
+                Console.WriteLine($"\nพบร้านอาหารที่ตรงกับคำว่า \"{keyword}\" ทั้งหมด {searchResults.Count} ร้าน:");
+                foreach (var item in searchResults)
+                {
+                    Console.WriteLine($"id : {item.getId()} | name: {item.getName()} | type: {item.getType()} | rating: {item.getRating()}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\nไม่พบร้านอาหารที่ตรงกับคำว่า \"{keyword}\" ครับ");
+            }
         }
     }
 
@@ -43,16 +59,15 @@ namespace RestaurantApp
         private String type;
         private double rating;
 
-
-        public Restaurant(int id,String name,String type,double rating)
+        public Restaurant(int id, String name, String type, double rating)
         {
             this.id = id;
             this.name = name;
             this.type = type;
             this.rating = rating;
         }
-        public int getId() { return id; }
 
+        public int getId() { return id; }
         public String getName() { return name; }
         public String getType() { return type; }
         public double getRating() { return rating; }
