@@ -8,11 +8,7 @@ namespace RestaurantApp
 {
     internal class Program
     {
-        static void Main(string[] args)
-        {
-            
-
-            List<Restaurant> restaurants = new List<Restaurant>
+        static List<Restaurant> restaurants = new List<Restaurant>
             {
              new Restaurant(1, "Quanjude Roast Duck", "Beijing Cuisine", 4.5),
               new Restaurant(2, "Donglaishun Hot Pot", "Hot Pot", 4.6),
@@ -21,7 +17,13 @@ namespace RestaurantApp
               new Restaurant(5, "Haidilao Hot Pot", "Hot Pot", 4.8),
             };
 
-            
+        static void Main(string[] args)
+        {
+
+            add_restaurant();
+
+
+
 
             foreach (var item in restaurants)
             {
@@ -33,8 +35,25 @@ namespace RestaurantApp
             Console.WriteLine($"คะแนนเฉลี่ยร้านทั้งหมด :{avg}");
 
 
+            
+
+            
+        }
+        public static void add_restaurant()
+        {
+            Console.WriteLine("----กรอกข้อมูลร้าน----");
+            Console.Write("ชื่อร้าน :");
+            string name  =  Console.ReadLine();
+            Console.Write("ประเภท :");
+            string type = Console.ReadLine();
+            Console.Write("คะแนน :");
+            double rating = int.Parse(Console.ReadLine());
+            int nextId = restaurants.Count > 0 ? restaurants.Last().getId() + 1 : 1;
+            restaurants.Add(new Restaurant(nextId, name, type, rating));
         }
     }
+
+    
 
     class Restaurant
     {
