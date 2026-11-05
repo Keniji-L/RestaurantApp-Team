@@ -35,8 +35,11 @@ namespace RestaurantApp
 
             double avg = restaurants.Average(r => r.getRating());
             Console.WriteLine($"จำนวนร้านทั้งหมด :{restaurants.Count}");
-            Console.WriteLine($"คะแนนเฉลี่ยร้านทั้งหมด :{avg}");
+            Console.WriteLine($"คะแนนเฉลี่ยร้านทั้งหมด :{avg}\n");
 
+            // --- ส่วนที่เพิ่มใหม่: ค้นหาร้านจากชื่อ ---
+            Console.Write("กรุณาใส่ชื่อร้านที่ต้องการค้นหา (พิมพ์บางส่วนได้): ");
+            string keyword = Console.ReadLine();
 
             Console.WriteLine();
 
@@ -70,6 +73,23 @@ namespace RestaurantApp
             int nextId = restaurants.Count > 0 ? restaurants.Last().getId() + 1 : 1;
             restaurants.Add(new Restaurant(nextId, name, type, rating));
         }
+            var searchResults = restaurants
+                .Where(r => r.getName().ToLower().Contains(keyword.ToLower()))
+                .ToList();
+
+            if (searchResults.Count > 0)
+            {
+                Console.WriteLine($"\nพบร้านอาหารที่ตรงกับคำว่า \"{keyword}\" ทั้งหมด {searchResults.Count} ร้าน:");
+                foreach (var item in searchResults)
+                {
+                    Console.WriteLine($"id : {item.getId()} | name: {item.getName()} | type: {item.getType()} | rating: {item.getRating()}");
+                }
+            }
+            else
+            {
+                Console.WriteLine($"\nไม่พบร้านอาหารที่ตรงกับคำว่า \"{keyword}\" ครับ");
+            }
+        }
     }
 
     
@@ -91,6 +111,7 @@ namespace RestaurantApp
             this.type = type;
             this.rating = rating;
         }
+
         public int getId() { return id; }
 
 
