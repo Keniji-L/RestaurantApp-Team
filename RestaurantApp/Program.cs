@@ -57,22 +57,6 @@ namespace RestaurantApp
             Console.WriteLine($"จำนวนร้านที่มีคะแนนดี :{goodRatingRestaurants.Count}");
 
 
-            
-
-            
-        }
-        public static void add_restaurant()
-        {
-            Console.WriteLine("----กรอกข้อมูลร้าน----");
-            Console.Write("ชื่อร้าน :");
-            string name  =  Console.ReadLine();
-            Console.Write("ประเภท :");
-            string type = Console.ReadLine();
-            Console.Write("คะแนน :");
-            double rating = int.Parse(Console.ReadLine());
-            int nextId = restaurants.Count > 0 ? restaurants.Last().getId() + 1 : 1;
-            restaurants.Add(new Restaurant(nextId, name, type, rating));
-        }
             var searchResults = restaurants
                 .Where(r => r.getName().ToLower().Contains(keyword.ToLower()))
                 .ToList();
@@ -89,7 +73,23 @@ namespace RestaurantApp
             {
                 Console.WriteLine($"\nไม่พบร้านอาหารที่ตรงกับคำว่า \"{keyword}\" ครับ");
             }
+
+
         }
+        public static void add_restaurant()
+        {
+            Console.WriteLine("----กรอกข้อมูลร้าน----");
+            Console.Write("ชื่อร้าน :");
+            string name  =  Console.ReadLine();
+            Console.Write("ประเภท :");
+            string type = Console.ReadLine();
+            Console.Write("คะแนน :");
+            double rating = int.Parse(Console.ReadLine());
+            int nextId = restaurants.Count > 0 ? restaurants.Last().getId() + 1 : 1;
+            restaurants.Add(new Restaurant(nextId, name, type, rating));
+        }
+            
+        
     }
 
     
