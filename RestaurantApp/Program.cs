@@ -73,8 +73,34 @@ namespace RestaurantApp
             {
                 Console.WriteLine($"\nไม่พบร้านอาหารที่ตรงกับคำว่า \"{keyword}\" ครับ");
             }
+            Console.WriteLine($"คะแนนเฉลี่ยร้านทั้งหมด :{avg:F2}");
 
+            // เรียกใช้ฟังก์ชัน ShowSummary เพื่อแสดงร้านที่คะแนนสูงสุดและต่ำสุด
+            ShowSummary(restaurants);
+        }
 
+        public static void ShowSummary(List<Restaurant> list)
+        {
+            if (list == null || list.Count == 0) return;
+
+            Restaurant maxRest = list[0];
+            Restaurant minRest = list[0];
+
+            foreach (var item in list)
+            {
+                if (item.getRating() > maxRest.getRating())
+                {
+                    maxRest = item;
+                }
+                if (item.getRating() < minRest.getRating())
+                {
+                    minRest = item;
+                }
+            }
+
+            Console.WriteLine("\n--- ผลสรุปคะแนนร้านอาหาร ---");
+            Console.WriteLine($"ร้านที่คะแนนสูงสุด: {maxRest.getName()} ({maxRest.getRating()} คะแนน)");
+            Console.WriteLine($"ร้านที่คะแนนต่ำสุด: {minRest.getName()} ({minRest.getRating()} คะแนน)");
         }
         public static void add_restaurant()
         {
