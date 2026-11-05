@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace RestaurantApp
 {
     internal class Program
@@ -25,14 +26,32 @@ namespace RestaurantApp
 
 
 
+
+
             foreach (var item in restaurants)
             {
                 Console.WriteLine($"id : {item.getId()} name: {item.getName()} type: {item.getType()} rating: {item.getRating()}");
             }
-            
+
             double avg = restaurants.Average(r => r.getRating());
             Console.WriteLine($"จำนวนร้านทั้งหมด :{restaurants.Count}");
             Console.WriteLine($"คะแนนเฉลี่ยร้านทั้งหมด :{avg}");
+
+
+            Console.WriteLine();
+
+
+            // --- feature/good-rating ---
+            // กรองเฉพาะร้านที่มีคะแนนตั้งแต่ 4.5 ขึ้นไป
+            var goodRatingRestaurants = restaurants.Where(r => r.getRating() >= 4.5).ToList();
+
+
+            Console.WriteLine("--- ร้านที่มีคะแนนตั้งแต่ 4.5 ขึ้นไป ---");
+            foreach (var item in goodRatingRestaurants)
+            {
+                Console.WriteLine($"id : {item.getId()} name: {item.getName()} type: {item.getType()} rating: {item.getRating()}");
+            }
+            Console.WriteLine($"จำนวนร้านที่มีคะแนนดี :{goodRatingRestaurants.Count}");
 
 
             
@@ -63,7 +82,9 @@ namespace RestaurantApp
         private double rating;
 
 
-        public Restaurant(int id,String name,String type,double rating)
+
+
+        public Restaurant(int id, String name, String type, double rating)
         {
             this.id = id;
             this.name = name;
@@ -71,6 +92,7 @@ namespace RestaurantApp
             this.rating = rating;
         }
         public int getId() { return id; }
+
 
         public String getName() { return name; }
         public String getType() { return type; }
